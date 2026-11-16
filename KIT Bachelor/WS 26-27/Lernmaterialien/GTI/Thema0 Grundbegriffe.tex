@@ -1,0 +1,315 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[babel,style=german]{csquotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{empheq}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+% \usepackage[draft]{hyperref}
+\usepackage{icomma}
+\usepackage{soul}
+\setul{1.2pt}{0.5pt}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usepackage{titlesec}
+\usepackage{xurl}
+\usepackage{geometry}
+\geometry{
+    left=2.28cm,
+    right=2.28cm,
+    top=3cm,
+    bottom=3cm
+}
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\afz}[1]{\enquote{#1}}
+\newcommand{\emptyline}{\hspace*{\fill}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+    \section{Menge}
+
+        \subsection{Grundlagen}
+
+            Eine Menge ist ein mathematisches Modell, das bestimmte Objekte mit bestimmten Eigenschaften enthält.
+
+            \vspace{-1em}
+            \begin{align*}
+                M = \{O \;\text{Objekt} \;|\; O \;\text{hat Eigenschaft}\; P\}
+            \end{align*}
+
+            Die Objekte können \textit{alles} sein: Zahlen, Formeln, Programme, Algorithmen, Dateien, Graphen, usw.
+            Es ist ein ziemlich abstrakter Begriff.
+
+            \emptyline
+
+            Eine Menge kann auf diese Weise definiert werden:
+            \afz{Es bezeichne $A$ die Menge, die die Zahlen 1, 2 und 3 enthält, und nichts sonst}.
+            Und dann haben wir die Menge $A$:
+
+            \vspace{-1em}
+            \begin{align*}
+                A = \{1, 2, 3\}
+            \end{align*}
+
+            Wir sagen: \afz{In $A$ ist die 42 nicht enthalten}.
+
+            \emptyline
+
+            Alle Objekte, die eine Menge enthält, heißen die Elemente der Menge.
+            Seien $A$ eine Menge und $x$ ein Objekt.
+            Wenn $x$ Element von $A$ ist, schreiben wir $x \in A$.
+            Das Gegenteil wird als $x \notin A$ notiert.
+
+            \emptyline
+
+            Die Elemente einer Menge haben keine Reihenfolge,
+            und jedes Element kommt in einer Menge höchstens einmal vor.
+            Es gibt also keine Vielfachheiten, z.B.:
+
+            \vspace{-1em}
+            \begin{align*}
+                \{1, 2, 3\} = \{3, 2, 1\} = \{1, 1, 2, 2, 3, 3, 3\}
+            \end{align*}
+
+            Die dritte Schreibweise nutzt man sehr selten, aber es kann vorkommen und ist mathematisch erlaubt.
+
+            \emptyline
+
+            Wir können eine Menge durch ihre enthaltenen Elemente eindeutig bestimmen.
+            Seien $A$ und $B$ zwei Mengen.
+            Dann gilt $A = B$, wenn für jedes Objekt $x$ gilt:
+
+            \vspace{-1em}
+            \begin{align*}
+                x \in A \Longleftrightarrow x \in B
+            \end{align*}
+
+        \subsection{Teilmengen}
+
+            Eine Menge kann Teilmenge einer anderen Menge sein.
+            Andererseits kann eine Menge auch Obermenge einer anderen Menge sein.
+
+            \emptyline
+
+            Seien $A$ und $B$ zwei Mengen.
+            Wenn $A$ Teilmenge von $B$ ist, schreiben wir $A \subseteq B$.
+            In diesem Fall ist $B$ Obermenge von $A$, geschrieben wird $B \supseteq A$.
+            Folglich wenn $A \subseteq B$ und $B \subseteq A$ gleichzeitig gelten, dann gilt $A = B$.
+
+            \emptyline
+
+            Wir merken, dass das Teilmengensymbol $\subseteq$ eine Linie am unteren Teil hat.
+            Das bedeutet, dass es auch $A = B$ sein kann, wenn $A$ Teilmenge von $B$ ist.
+            Dazu ergänzen wir den Begriff \textit{echte Teilmenge}.
+            Die sind die Teilmengen, die nicht identisch mit ihrer Obermenge sind.
+            Dafür gibt es verschiedene Schreibweisen: $A \subsetneqq B$, $A \subsetneq B$ oder einfach $A \subset B$.
+
+        \subsection{Leere Menge}
+
+            Die leere Menge ist die Menge, die gar keine Elemente enthält.
+            Dafür gibt es verschiedene Schreibweisen: $\{\}$, $\emptyset$ und $\varnothing$.
+
+            \emptyline
+
+            Die leere Menge ist Teilmenge jeder Menge.
+            Aber man muss beachten, dass $\emptyset$ und $\{\emptyset\}$ ungleich sind.
+            Ersteres beschreibt die leere Menge selbst, Letzteres beschreibt eine Menge,
+            die die leere Menge als Element enthält.
+
+        \subsection{Definitionsweise einer Menge}
+
+            Es gibt verschiedene mögliche Weisen, eine Menge zu definieren.
+            Aber wir müssen beachten, dass eine Definition exakt und nicht mehrdeutig sein muss.
+
+            \emptyline
+
+            Es gibt ein Beispiel, für ein $n \in \N_0$ definiere:
+
+            \vspace{-1em}
+            \begin{align*}
+                [n] = \{1, \cdots, n\}
+            \end{align*}
+
+            Aber wir können (an der Uni) nicht direkt behaupten, was die Punkte bedeuten.
+            Obwohl es so aussieht, dass die Punkte alle natürlichen Zahlen zwischen 1 und $n$ repräsentiert,
+            ist diese Definition trotzdem mehrdeutig.
+            
+            \emptyline
+
+            Deswegen definieren wir $[n]$ lieber wie:
+
+            \vspace{-1em}
+            \begin{align*}
+                [n] = \{i \in \N_0 \;|\; 1 \leq i \leq n\}
+            \end{align*}
+
+            und ergänzen wir noch einen speziellen Fall, damit für alle mögliche $n$ eine entsprechende Menge $[n]$ gibt:
+
+            \vspace{-1em}
+            \begin{align*}
+                [0] = \emptyset
+            \end{align*}
+
+            Dazu kommen wir zu \textit{set comprehension}.
+            Sei $P(x)$ eine Aussage für jedes Objekt $x$ wahr oder falsch ist.
+            Dann enthält $\{x \in M \;|\; P(x)\}$ genau die $x \in M$, für die $P(x)$ wahr ist.
+
+            \emptyline
+
+            Es ist nicht notwendig, in die Definition einen Definitionsbereich für $x$ einzusetzen.
+            Falls das auch verständlich ist, können wir natürlich auch $\{x \;|\; P(x)\}$ schreiben.
+            Es gibt auch eine alternative Schreibweise $\{x : P(x)\}$.
+            Der Zweck ist nur, wie gesagt, die Definition exact zu sein.
+
+            \emptyline
+
+            \textbf{ABER} es ist notwendig, nur \afz{harmlose} Aussagen $P$ zu nutzen (vgl. Russells Paradoxon).
+            Eine Menge $A = \{x \;|\; x \notin A\}$ oder $R = \{x \;|\; x \notin x\}$ führt zu einem Widerspruch.
+
+        \subsection{Mengenoperatoren}
+
+            Seien $A$ und $B$ zwei Mengen.
+
+            \emptyline
+
+            Dann ist die \ul{Vereinigung} von $A$ und $B$:
+
+            \vspace{-1em}
+            \begin{align*}
+                A \cup B = \{x \;|\; x \in A \vee x \in B\}
+            \end{align*}
+
+            \newpage
+
+            Wenn ein Objekt $x$ ein Element von $A$ und $B$ ist, zählt das in $A \cup B$ auch nur einmal.
+            Weil wie gesagt, ein Element kommt in einer Menge höchstens einmal vor, z.B.:
+
+            \vspace{-1em}
+            \begin{align*}
+                \{1, 2, 3\} \cup \{3, 4, 5\} = \{1, 2, 3, 4, 5\}
+            \end{align*}
+
+            Der \ul{Durchschnitt} von $A$ und $B$ ist so definiert:
+
+            \vspace{-1em}
+            \begin{align*}
+                A \cap B = \{x \;|\; x \in A \wedge x \in B\}
+            \end{align*}
+
+            Dazu führen wir einen neuen Begriff ein:
+            \ul{disjunkte Mengen} sind die Mengen $A$ und $B$, für die $A \cap B = \emptyset$ gilt.
+            Wir sagen in diesem Fall, dass $A$ und $B$ disjunkt sind.
+
+            \emptyline
+
+            Die \ul{Mengendifferenz} von $A$ und $B$, gelesen \afz{$A$ ohne $B$}, ist so definiert:
+
+            \vspace{-1em}
+            \begin{align*}
+                A \setminus B = \{x \in A \;|\; x \notin B\}
+            \end{align*}
+
+            Die \ul{Kardinalität} einer Menge $A$ ist die Anzahl ihrer Elemente (hier nur für endliche Mengen definiert),
+            notiert als $|A|$ (evtl. $\#A$ oder $\text{card}A$).
+            Die Kardinalität für eine endliche Menge ist eine nichtnegative ganze Zahl.
+            Bei unendlichen Mengen reden wir hier nicht über ihre Kardinalität (aber man kann das ordentlich definieren).
+
+            \emptyline
+
+            Man muss achten, dass die Summe von zwei Kardinalitäten zweier Mengen nicht unbedingt gleich wie
+            die Kardinalität der Vereinigung zweier Mengen, z.B.:
+
+            \vspace{-1em}
+            \begin{align*}
+                |\{1, 2\}| + |\{2, 3\}| = 2 + 2 = 4 \neq 3 = |\{1, 2, 3\}| = |\{1, 2\} \cup \{2, 3\}|
+            \end{align*}
+
+            Letztendlich ist die \ul{Potenzmenge} einer Menge $M$:
+
+            \vspace{-1em}
+            \begin{align*}
+                \mathcal{P}(M) = 2^M = \{A \;|\; A \subseteq M\}
+            \end{align*}
+
+            Hier ist $2^M$ eine spezielle Schreibweise. 
+
+    \newpage
+
+    \section{Abbildung}
+
+        Seien $A$ und $B$ zwei (nicht notwendigerweise verschiedene) Mengen.
+
+        \emptyline
+
+        Dann ordnet eine Abbildung $f: A \to B$ jedem Element von $A$ genau ein Element von $B$ zu.
+        Hier ist $A$ der Definitionsbereich von $f$, $B$ der Zielbereich von $f$.
+
+        \emptyline
+
+        Eine Abbildung ist bestimmt durch Abbildungsvorschrift, z.B. Spezifikation von Funktionswerten.
+        Wird ein Element $x \in A$ auf das die Abbildung angewendet wird,
+        dann wird $x \in A$ auf $f(x) \in B$ abgebildet, notiert als:
+
+        \vspace{-1em}
+        \begin{align*}
+            x \mapsto f(x)
+        \end{align*}
+
+        Abbildungen heißen auch Funktionen, aber Funktionen beschreiben meist dem Fall, wenn Definitions- und Zielbereich Zahlenmengen sind.
+        Abbildungen sind normaleweise abstrakter.
+
+        \emptyline
+
+        Wir stellen ein Beispiel vor (Collatz Problem):
+
+        \vspace{-1em}
+        \begin{align*}
+            f: \N_0 \to \N_0, n \mapsto
+            \begin{cases}
+                n / 2, &\text{falls $n$ gerade} \\
+                3n + 1, &\text{falls $n$ ungerade}
+            \end{cases}
+        \end{align*}
+
+        Oder:
+
+        \vspace{-1em}
+        \begin{gather*}
+            \psi: \{G \;|\; G \;\text{Graph}\} \to \{0, 1\}, \pi: \{G \;|\; G \;\text{Graph}\} \to \N_0 \\
+            \begin{aligned}
+                \psi(G) &=
+                \begin{cases}
+                    1, &\text{falls $G$ eine Euler-Tour hat} \\
+                    0, &\text{sonst}
+                \end{cases} \\
+                    \pi(G) &= \text{Anzahl der Euler-Touren von $G$}
+            \end{aligned}
+        \end{gather*}
+
+        Aus diesem Beispiel können wir erkennen, dass die Eingaben einer Abbildung nicht unbedingt Zahlen sind.
+
+        \emptyline
+
+        Zu jeder Abbildung $f$ gehört Definitionsbereich, Zielbereich und Abbildungsvorschrift.
+        Wenn der Definitionsbereich oder Wertebereich zweier Abbildungen unterschiedlich sind, dann sind sie verschiedene Abbildungen.
+        Aber wenn nur die Abbildungsvorschrift unterschiedlich aussieht, kann das sein, dass die Abbildungen trotzdem gleich sind, z.B.:
+
+        \vspace{-1em}
+        \begin{align*}
+            &f_1: \R \to \R, x \mapsto x^2 \\
+            &f_2: \R \to \R_+, x \mapsto x^2 \\
+            &f_3: \R \to \R, x \mapsto x(x + 1) - x
+        \end{align*}
+
+        Hier sind Abbildungen $f_1$ und $f_3$ gleich, aber $f_1$ und $f_2$ sind verschiedene Abbildungen.
+
+\end{document}

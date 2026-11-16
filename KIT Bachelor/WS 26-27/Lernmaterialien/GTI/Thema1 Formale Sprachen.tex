@@ -1,0 +1,754 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[babel,style=german]{csquotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{changepage}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{empheq}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{hyperref}
+% \usepackage[draft]{hyperref}
+\usepackage{icomma}
+\usepackage{soul}
+\setul{1.2pt}{0.5pt}
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
+\usepackage{tkz-euclide}
+\usepackage{titlesec}
+\usepackage{tabularray}
+\UseTblrLibrary{booktabs}
+\usepackage{xurl}
+\usepackage{geometry}
+\geometry{
+    left=2.28cm,
+    right=2.28cm,
+    top=3cm,
+    bottom=3cm
+}
+
+\setlength{\parindent}{0pt}
+
+\definecolor{myorange}{HTML}{B35900}
+\definecolor{mygreen}{HTML}{009900}
+\definecolor{mydarkgreen}{HTML}{005500}
+\definecolor{mybrightyellow}{RGB}{255, 243, 205}
+
+\newcommand{\afz}[1]{\enquote{#1}}
+\newcommand{\emptyline}{\hspace*{\fill}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\If}[1]{\text{falls}\; #1}
+\newcommand{\ch}[3]{%
+    \begin{tabular}[b]{@{\hspace{2pt}}c@{\hspace{2pt}}}
+        \textcolor{#1}{#2} \\[2pt]
+        \textcolor{blue}{\texttt{#3}}
+    \end{tabular}%
+}
+
+\begin{document}
+
+    \tableofcontents
+
+    \newpage
+
+    \section{Einführung}
+
+        Es gibt unglaublich viele Sprachen.
+        Aber wenn wir alle Sprachen abstrahieren, können wir erkennen, dass sie aus Zeichen, einem Alphabet und Wörtern gebildet werden.
+
+        \emptyline
+
+        Das Zeichen ist die kleinste Einheit einer Sprache.
+        Wir können die Zeichen als Symbole verstehen.
+        Alle erlaubten Zeichen bilden ein Alphabet, als eine endliche Menge von Zeichen.
+        Und daraus können wir Wort definieren: Ein Wort ist eine endliche Zeichenfolge.
+        Ähnlicheweise können wir auch Sprache definieren: Eine Sprache ist eine Menge von Wörtern, die alle erlaubten Wörter enthält.
+        Es ist leicht zu sehen, dass Sprachen meistens unendlich groß sind, da es normalerweise unendlich viele erlaubte Wörter gibt,
+        die wir uns nicht alle einzeln vorstellen können.
+
+    \section{Alphabet}
+
+        Ein Alphabet ist mathematisch eine endliche, nicht-leere Menge.
+        Es wird oftmals mit $A$ bezeichnet, aber später wird auch $\Sigma$ oft verwendet.
+        Die Elemente dieser Menge nennen wir entweder Zeichen oder Symbole.
+
+        \emptyline
+
+        Wir stellen einige Beispiele in der Theoretischen Informatik vor:
+
+        \vspace{-1em}
+        \begin{align*}
+            &A = \{0, 1\} \\
+            &A = [n] = \{i \in \N_+ \;|\; 1 \leq i \leq n\} \; (n \in \N_+) \\
+            &A = \{!, *, \%\}
+        \end{align*}
+
+        Die Beispiele sind nicht sehr anschaulich, deswegen nennen wir auch paar Beispiele in der Praktischen Informatik:
+
+        \begin{itemize}
+            \item ASCII
+            \item Unicode
+            \item ARMSCII
+            \item DIN 91379
+            \item ...
+        \end{itemize}
+
+    \newpage
+
+    \section{Wörter}
+
+        \subsection{Grundlagen}
+
+            Wir nehmen an, dass ein Alphabet $A$ fest ist.
+            Es wird einmal fixiert, und nicht zwischendrin verändert.
+
+            \emptyline
+
+            Dann definieren wir ein Wort als eine endliche Folge von Zeichen aus $A$.
+            Zu beachten ist, dass die Symbole mehrfach vorkommen dürfen.
+
+            \emptyline
+
+            Ein Wort (über dem Alphabet $A$) kann nummeriert werden.
+            Die Zeichen-Reihenfolge nennen wir Nummerierung.
+            Das heißt, dass ein Wort tatsächlich eine Abbildung $w: [n] \to A$ ist.
+
+            \begin{center}
+                \begin{tblr}{
+                    colspec = {*{9}{c}},
+                    row{1} = {fg=myorange},
+                    row{2} = {fg=blue, font=\ttfamily}
+                }
+                    \toprule
+                    1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+                    M & i & l & c & h & r & e & i & s \\
+                    \bottomrule
+                \end{tblr}
+            \end{center}
+
+            $n$ heißt die Länge eines Wortes, geschrieben $|w|$.
+            normalerweise gilt immer $n \geq 1$.
+            Die einzige Ausnahme ist das \textit{leere} Wort $\varepsilon$ (kommt später dazu).
+
+            \emptyline
+
+            Wir stellen ein Beispiel \afz{hallo} vor:
+
+            \vspace{-1em}
+            \begin{gather*}
+                w : [5] \to \{\text{a}, \text{h}, \text{l}, \text{o}\}, \\
+                w(1) = \text{h},\ w(2) = \text{a},\ w(3) = w(4) = \text{l},\ w(5) = \text{o}
+            \end{gather*}
+
+            bzw.:
+
+            \vspace{-1em}
+            \begin{align*}
+                1 \mapsto \text{h},\ 2 \mapsto \text{a},\ 3 \mapsto \text{l},\ 4 \mapsto \text{l},\ 5 \mapsto \text{o}
+            \end{align*}
+
+            Um es einfacher zu lesen, schreiben wir normalerweise $w_i$ statt $w(i)$.
+
+            \emptyline
+
+            Wir definieren $A^*$ als die Menge aller möglicher Wörter über Alphabet $A$.
+            Das heißt, alle Wörter, die nur Zeichen aus $A$ enthalten, sind Elemente von $A^*$.
+
+            \emptyline
+
+            Zum Beispiel sei $A = \{\text{a}, \text{b}\}$, dann enthält $A^*$ die Wörter:
+
+            \begin{itemize}
+                \item a und b
+                \item aa, ab, ba und bb
+                \item aaa, aab, aba, abb, baa, bab, bba und bbb,
+                \item ...
+                \item und außerdem $\varepsilon$, das \textit{leere} Wort.
+            \end{itemize}
+
+            Wir können leicht erkennen, dass es unendlich viele Wörter in $A^*$ gibt, die alle endliche Länge haben.
+            Dadurch definieren wir $A^*$ formal:
+
+            \vspace{-1em}
+            \begin{align*}
+                A^* = \{w: [n] \to A \;|\; n \in \N_0\}
+            \end{align*}
+
+        \subsection{Das leere Wort}
+
+            Das leere Wort besteht aus 0 Symbolen.
+            Notiert als $\varepsilon$.
+
+            \emptyline
+
+            Das leere Wort ist eindeutig, weil:
+
+            \vspace{-1em}
+            \begin{align*}
+                \varepsilon: [0] \to A \Longleftrightarrow \varepsilon: \emptyset \to A
+            \end{align*}
+
+            Diese Abbildung hat einen leeren Definitionsbereich, deswegen gibt es nur eine solche Abbildung.
+            Daraus folgt, dass das leere Wort eindeutig ist.
+
+            \emptyline
+
+            \textbf{ACHTUNG} das leere Wort ist \afz{etwas}.
+            Die Kardinalität der Menge $\{\varepsilon\}$ ist $|\{\varepsilon\}| = 1$.
+            Das ist nicht die leere Menge (Zum Vergleich $|\emptyset| = 0$).
+
+        \subsection{\texorpdfstring{$A^n$ - die Wörter der Länge $n$}{Aⁿ - die Wörter der Länge n}}
+
+            Wir definieren $A^n$ als die Menge aller Wörter der Länge $n \in \N_0$ über dem Alphabet $A$.
+
+            \emptyline
+
+            Also ist sozusagen:
+
+            \vspace{-1em}
+            \begin{align*}
+                A^* = A^0 \cup A^1 \cup A^2 \cup A^3 \cup \cdots
+            \end{align*}
+
+            Wir können ohne Pünktchen schreiben, damit die Definition exakt ist:
+
+            \vspace{-1em}
+            \begin{align*}
+                A^* = \bigcup_{i \in \N_0} A^i
+            \end{align*}
+
+        \subsection{Konkatenation von Wörtern}
+
+            Wir können zwei Wörter miteinander verketten.
+            Diese Operation wird als Konkatenation bezeichnet und durch das Symbol \afz{$\cdot$} dargestellt.
+
+            \emptyline
+
+            Eine formale Definition ist:
+            Es seien $w_1: [m] \to A_1$ und $w_2: [n] \to A_2$ zwei Wörter.
+            Dann gilt:
+
+            \vspace{-1em}
+            \begin{align*}
+                w_1 \cdot w_2: [m + n] &\to A_1 \cup A_2 \\
+                                     i &\mapsto
+                \begin{cases}
+                    w_1(i)     &\If{1 \leq i \leq m} \\
+                    w_2(i - m) &\If{m < i \leq m + n}
+                \end{cases}
+            \end{align*}
+
+            Übrigens gilt:
+
+            \vspace{-1em}
+            \begin{align*}
+                |w_1 \cdot w_2| = |w_1| + |w_2|
+            \end{align*}
+
+            Ein Beispiel stellen wir vor:
+
+            \vspace{-1em}
+            \begin{align*}
+                &\ch{myorange}{1}{A}\ \ch{myorange}{2}{P}\ \ch{myorange}{3}{F}\ \ch{myorange}{4}{E}\ \ch{myorange}{5}{L}
+                \ \cdot \ 
+                \ch{mygreen}{1}{M}\ \ch{mygreen}{2}{U}\ \ch{mygreen}{3}{S} \\[10pt]
+                =\ &\ch{myorange}{1}{A}\ \ch{myorange}{2}{P}\ \ch{myorange}{3}{F}\ \ch{myorange}{4}{E}\ \ch{myorange}{5}{L}\ \ch{mydarkgreen}{6}{M}\ \ch{mydarkgreen}{7}{U}\ \ch{mydarkgreen}{8}{S}
+            \end{align*}
+
+            Den Punkt können wir manchmal weglassen.
+
+            \newpage
+
+            Für jedes Alphabet $A$ gilt:
+
+            \vspace{-1em}
+            \begin{align*}
+                \forall w \in A^*: w \cdot \varepsilon = w \wedge \varepsilon \cdot w = w
+            \end{align*}
+
+            Das ist anschaulich klar, aber wir können es natürlich auch formal beweisen.
+
+            \emptyline
+
+            \begin{adjustwidth}{2em}{0pt}
+                Sei $w' := w \cdot \varepsilon$ mit $|w| = m$.
+                Dann ist $w'$ eine Abbildung $w': [m + 0] \to A$.
+
+                \emptyline
+
+                Dann für $i \in [m]$ gilt:
+
+                \vspace{-1em}
+                \begin{align*}
+                    w'(i) = (w \cdot \varepsilon)(i) &=
+                    \begin{cases}
+                                      w(i) &\If{1 \leq i \leq m} \\
+                        \varepsilon(i - m) &\If{m < i \leq m + 0}
+                    \end{cases} \\
+                                                     &= w(i)
+                \end{align*}
+
+                Und es ist leicht zu sehen, dass $w$ und $w'$ gleichen Definitionsbereich und Zielbereich haben.
+                Gleichzeitig haben sie überall die gleichen Funktionswerte.
+                Also $w' = w$, folgt $w \cdot \varepsilon = w$.
+                Den umgekehrten Fall $\varepsilon \cdot w = w$ können wir auf dieselbe Weise beweisen.
+            \end{adjustwidth}
+
+            \emptyline
+
+            Die Konkatenation von Wörtern ist \textbf{nicht kommutativ}.
+            Das heißt, dass die Reihenfolge wichtig ist.
+            Aber Konkatenation ist assoziativ, was heißt (hier sind $w_1$, $w_2$ und $w_3$ Wörtern):
+
+            \vspace{-1em}
+            \begin{align*}
+                \forall w_1, w_2, w_3 \in A^*: (w_1 \cdot w_2) \cdot w_3 = w_1 \cdot (w_2 \cdot w_3)
+            \end{align*}
+
+            Deswegen ist die Klammerung egal.
+
+            \emptyline
+
+            Analog zur Potenzschreibweise bei Zahlen definieren wir für Wörter ähnlicheweise wie
+
+            \vspace{-1em}
+            \begin{align*}
+                w^n = \underbrace{w \cdot w \cdot \cdots \cdot w}_{n \;\text{mal}}
+            \end{align*}
+
+            Aber da wir Notation mit Pünktchen vermeiden müssen, schreiben wir wie:
+
+            \vspace{-1em}
+            \begin{align*}
+                \forall n \in \N_0\ \forall w \in A^*: w^n =
+                \begin{cases}
+                    \varepsilon     &\If{n = 0} \\
+                    w \cdot w^{n-1} &\If{n \geq 1}
+                \end{cases}
+            \end{align*}
+        
+        \subsection{Teilwörter}
+
+            Ein Teilwort (= Substring) ist eine zusammenhängende Teilfolge.
+
+            \emptyline
+
+            Seien $v, w \in A^*$ Wörter über einem Alphabet $A$, dann ist:
+
+            \begin{itemize}
+                \item $v$ ein Teilwort von $w$ wenn:
+                    \begin{align*}
+                        \exists x_1, x_2 \in A^*: w = x_1 \cdot v \cdot x_2
+                    \end{align*}
+                \item $v$ ein Präfix von $w$ wenn:
+                    \begin{align*}
+                        \exists x \in A^*: w = v \cdot x
+                    \end{align*}
+                \item $v$ ein Suffix von $w$ wenn:
+                    \begin{align*}
+                        \exists x \in A^*: w = x \cdot v
+                    \end{align*}
+            \end{itemize}
+
+    \section{Sprachen}
+
+        \subsection{Grundlagen}
+
+            Es gibt natürliche Sprache und künstliche Sprachen.
+            Man fragt sich, wie man spezifiziert, was syntaktisch korrekt ist.
+            Man fragt sich auch, wie man überprüft, ob etwas syntaktisch korrekt ist.
+            Wie definiert man die Bedeutung syntaktisch korrekter Gebilde?
+
+            \emptyline
+
+            Sei $A$ ein Alphabet.
+            Dann ist eine \textit{formale Sprache} $L$ eine Menge von Wörtern über $A$, also $L \subseteq A^*$.
+            Hier spielt die Bedeutung keine Rolle.
+
+            \emptyline
+
+            Formale Sprachen sind als Modelle / Formalisierungen sehr vielseitig.
+            
+            \begin{itemize}
+                \item für Syntax: \afz{Wörter der korrekten Form}.
+                \item für Semantik: \afz{Wörter der korrekten Bedeutung}.
+            \end{itemize}
+
+        \subsection{Produkte formaler Sprachen}
+
+            Sei zwei formale Sprachen $L_1$ und $L_2$.
+            Dann ist das Produkt der zwei Sprachen:
+
+            \vspace{-1em}
+            \begin{align*}
+                L_1 \cdot L_2 = \{w_1 \cdot w_2 \;|\; w_1 \in L_1 \wedge w_2 \in L_2\}
+            \end{align*}
+
+            Wegen der Assoziativität der Konkatenation von Wörtern folgt:
+
+            \vspace{-1em}
+            \begin{align*}
+                L_1 \cdot L_2 \cdot L_3 = \{w_1 \cdot w_2 \cdot w_3 \;|\; w_1 \in L_1 \wedge w_2 \in L_2 \wedge w_3 \in L_3\}
+            \end{align*}
+
+            Wie bei der Konkatenation von Wörtern lassen wir auch gerne den Punkt wieder weg.
+
+            \emptyline
+
+            Es ist einfach zu beweisen, dass die leere Sprache ein neutrales Element für Produkt formaler Sprachen ist,
+            was heißt:
+
+            \vspace{-1em}
+            \begin{align*}
+                L \cdot \{\varepsilon\} = \{\varepsilon\} \cdot L = L
+            \end{align*}
+
+            Der Beweis ist folgende:
+
+            \begin{adjustwidth}{2em}{0pt}
+                \vspace{-1em}
+                \begin{align*}
+                    L \cdot \{\varepsilon\} &= \{w_1w_2 \;|\; w_1 \in L \wedge w_2 \in \{\varepsilon\}\} \\
+                                            &= \{w_1w_2 \;|\; w_1 \in L \wedge w_2 = \varepsilon\} \\
+                                            &= \{w_1\varepsilon \;|\; w_1 \in L\} \\
+                                            &= \{w_1 \;|\; w_1 \in L\} \\
+                                            &= L
+                \end{align*}
+
+                Analog kann man $L = \{\varepsilon\} \cdot L$ zeigen.
+            \end{adjustwidth}
+
+            \emptyline
+
+            Folglich wird die Potenz einer Sprache $L$ definiert: $L^n$ enthält alle Konkatenationen von $n$ Wörtern in $L$:
+
+            \vspace{-1em}
+            \begin{align*}
+                                    L^0 &= \{\varepsilon\} \\
+                \forall n \in \N_+: L^n &= L \cdot L^{n-1}
+            \end{align*}
+
+            Genau wie bei Wörtern ist die Konkatenation von Sprachen auch eine assoziative Operation.
+
+            \newpage
+
+            Jedes Wort $w \in L^n$ ist ein Wort $w = w_1 \cdot \cdots \cdot w_n$ mit $w_i \in L$ für jedes $i \in [n]$.
+
+            \emptyline
+
+            \textbf{ABER} verschiedene Potenzen der Sprache $L$ sind nicht unbedingt disjunkt.
+            Zum Beispiel seien:
+
+            \vspace{-1em}
+            \begin{align*}
+                A &= \{\text{a}, \text{b}\} \\
+                L &= \{\text{a}, \text{ab}, \text{b}, \text{ba}\}
+            \end{align*}
+
+            Dann gibt es (\afz{$|$} als Trennzeichen):
+
+            \vspace{-1em}
+            \begin{align*}
+                w_1 \in L^2 &= \text{ab|ab} \\
+                w_2 \in L^3 &= \text{ab|a|b}
+            \end{align*}
+
+            Daraus folgt, dass die Vereinigung von $L^i$ und $L^j$ mit $i, j \in \N_+, i \neq j$ nicht unbedingt leer ist.
+
+        \subsection{Konkatenationsabschluss formaler Sprachen}
+
+            Bei Alphabeten haben wir definiert:
+
+            \vspace{-1em}
+            \begin{align*}
+                A^* = \bigcup_{i \in \N_0} A^i
+            \end{align*}
+
+            Ähnlicheweise definieren wir den Konkatenationsabschluss $L^*$ von $L$ (kleenescher Abschluss):
+
+            \vspace{-1em}
+            \begin{align*}
+                L^* = \bigcup_{i \in \N_0} L^i
+            \end{align*}
+
+            Gleichzeitig gibt es den $\varepsilon$-freier Konkatenationsabschluss $L^+$ von $L$ (positiver Abschluss):
+
+            \vspace{-1em}
+            \begin{align*}
+                L^+ = \bigcup_{i \in \N_+} L^i
+            \end{align*}
+
+            Daraus folgt:
+
+            \vspace{-1em}
+            \begin{align*}
+                L^* = L^0 \cup L^+
+            \end{align*}
+
+            Da jedes Wort aus $A^*$ die Konkatenation von Blöcken, und $L^*$ enthält alle mögliche Konkatenationen von Wörtern,
+            gilt $L^* = A^*$.
+
+            \emptyline
+
+            Es ist auch sehr wichtig zu wissen, dass der positive Abschluss nicht \afz{$\varepsilon$-frei} sein muss.
+            Da $L = L^i \subseteq L^+$, wenn $\varepsilon \in L$ gilt, dann gilt auch $\varepsilon \in L^+$.
+            
+            \emptyline
+
+            Am Ende ergänzen wir:
+
+            \vspace{-1em}
+            \begin{align*}
+                \emptyset^* = \{\varepsilon\}
+            \end{align*}
+
+            Später wird es nützlich.
+
+        \newpage
+
+        \subsection{Reguläre Ausdrücke}
+
+            Seien $L_1$, $L_2$ zwei Sprachen.
+            Durch verschiedene Operationen wie Produkt, kleenescher Abschluss und Vereinigung entstehen neue Sprachen.
+            Wir fragen uns, welche Sprachen so erzeugt werden können, welche davon nicht erzeugt werden können?
+
+            \emptyline
+
+            Sei Alphabet $Z = \{\cup, (, ), *, \emptyset\}$ von \afz{Hilfssymbolen}.
+            Alphabet $A$ darf kein Zeichen aus $Z$ enthalten.
+            Dann heißt ein regulärer Ausdruck über $A$ ein Wort über dem Alphabet $A \cup Z$,
+            das gewissen Vorschriften genügt.
+
+            \emptyline
+
+            Die Menge der regulären Ausdrücke (RA) ist wie folgt festgelegt:
+
+            \begin{itemize}
+                \item $\emptyset$ ist ein RA
+                \item für jedes Zeichen $a \in A$ ist $a$ ein RA
+                \item wenn $R_1$ und $R_2$ RA sind, dann auch $(R_1 \cup R_2)$ und $(R_1 \cdot R_2)$
+                \item wenn $R$ ein RA ist, dann auch $(R^*)$
+                \item Nichts anderes sind reguläre Ausdrücke
+            \end{itemize}
+
+            Das ergibt eine Sprache $L_\text{RA} \subseteq (A \cup Z)^*$.
+
+            \emptyline
+
+            Es gibt eine Regeln, die Klammern zu einsparen.
+
+            \begin{itemize}
+                \item äußere Klammern kann man weglassen
+                \item \afz{Stern- vor Punktrechnung}
+                \item \afz{Punkt- vor Strichrechnung}
+                \item bei mehreren gleichen binären Operatoren ohne Klammern gilt das als links geklammert
+            \end{itemize}
+
+            Es gibt ein paar Beispiele:
+
+            \vspace{-1em}
+            \begin{align*}
+                                 R_1 \cup R_2 R_3^* &= R_1 \cup R_2 (R_3^*) \\
+                                                    &= R_1 \cup (R_2 (R_3^*)) \\
+                                                    &= (R_1 \cup (R_2 (R_3^*))) \\
+                              R_1 \cup R_2 \cup R_3 &= ((R_1 \cup R_2) \cup R_3) \\ 
+                (R_1 R_2 R_3)^{**} \cup \emptyset^* &= (((((R_1 R_2)R_3)^*)^*) \cup (\emptyset^*))
+            \end{align*}
+
+            Wir können eine formale Sprache $L$ durch einen regulären Ausdruck $R$ beschreiben, notiert als $L(R)$.
+            Die Definition der Sprache $L(R)$ folgt der des regulären Ausdrucks $R$:
+
+            \begin{itemize}
+                \item $L(\emptyset) = \emptyset$
+                \item $L(a) = \{a\} \; (a \in A)$
+                \item $L(R_1 \cup R_2) = L(R_1) \cup L(R_2)$
+                \item $L(R_1 R_2) = L(R_1) \cdot L(R_2)$
+                \item $L(R^*) = L(R)^*$
+            \end{itemize}
+
+            \newpage
+
+            Jede formale Sprache, die sich durch einen regulären Ausdruck (mithilfe endlich vieler Vereinigungen $\cup$,
+            Konkatenationen $\cdot$ und Kleene-Sterne $^*$) beschreiben lässt,
+            heißt per Definition eine reguläre Sprache.
+
+            \emptyline
+
+            Reguläre Ausdrücke besitzen kein unbegrenztes \afz{Gedächtnis} (sie können nicht beliebig weit zählen)
+            und können daher keine Abhängigkeiten zwischen beliebig langen Teilwörtern erzwingen,
+            weshalb Sprachen wie $L = \{\text{a}^n\text{b}^n : n \in \N_+\}$ nicht regulär sind. 
+
+        \subsection{Induktive Definitionen}
+
+            Die Definition der n-ten Potenz einer Sprache $L$ können wir mit einer induktiven Definition schreiben:
+
+            \vspace{-1em}
+            \begin{align*}
+                \forall n \in \N_0: L^n =
+                \begin{cases}
+                    \{\varepsilon\} &\If{n = 0} \\
+                    L \cdot L^{n-1} &\If{n \geq 1}
+                \end{cases}
+            \end{align*}
+
+            Wir definieren $L^n$ wenn $L^{n-1}$ schon definiert ist.
+            Das ist eine induktive Definition, aka. rekursive Definition.
+            $L^0 = \{\varepsilon\}$ heißt die Verankerung.
+
+            \emptyline
+
+            Sei $A$ ein beliebiges Alphabet.
+            Wir liegen zwei weitere Beispiele vor:
+
+            \vspace{-1em}
+            \begin{align*}
+                \forall w \in A^*\ \forall a \in A&: |w|_a =
+                \begin{cases}
+                    0          &\If{w = \varepsilon} \\
+                    1 + |w'|_a &\If{\exists w' \in A^*: w = aw'} \\
+                    |w'|_a     &\If{w' \in A^* \wedge \exists x \in A \setminus \{a\}: w = xw'}
+                \end{cases} \\
+                \forall w \in A^*&: \overline{w} =
+                \begin{cases}
+                    w              &\If{|w| \leq 1} \\
+                    \overline{w'}x &\If{\exists x \in A\ \exists w' \in A^+: w = xw'}
+                \end{cases}
+            \end{align*}
+
+            Wir können mit Induktiver Definition festlegen, wie ein korrekter Klammerausdruck aussieht.
+            Ein Wort $w \in A^*$ ist ein korrekter Klammerausdruck, wenn:
+
+            \begin{itemize}
+                \item $w = \varepsilon$ oder
+                \item $w = w_1 w_2$ für korrekte Klammerausdrücke $w_1$ und $w_2$ oder
+                \item $w = (w_1)$ für korrekten Klammerausdruck $w_1$
+            \end{itemize}
+
+            Als Beispiel können wir $\texttt{(())()()} \in L$ in einer Baumdiagramm hinschreiben:
+
+            \begin{center}
+                \scalebox{0.8}{
+                    \begin{tikzpicture}[
+                        level distance=18mm,
+                        every node/.style={font=\large},
+                        lnode/.style={
+                            rectangle,
+                            fill=blue!10,
+                            inner sep=4.5pt,
+                            minimum height=20pt
+                        },
+                        level 1/.style={sibling distance=72mm},
+                        level 2/.style={sibling distance=16mm},
+                        level 3/.style={sibling distance=16mm},
+                        level 4/.style={sibling distance=16mm},
+                        edge from parent/.style={draw=black, thin}
+                    ]
+                        \node[lnode] {$\textcolor{blue}{\texttt{(())()()}} \in L$}
+                            child {
+                                node[lnode] {$\textcolor{blue}{\texttt{(())}} \in L$}
+                                child { node {$\textcolor{blue}{\texttt{(}}$} }
+                                child {
+                                    node[lnode] {$\textcolor{blue}{\texttt{()}} \in L$}
+                                    child { node {$\textcolor{blue}{\texttt{(}}$} }
+                                    child {
+                                        node[lnode] {$\varepsilon \in L$}
+                                        child { node {$\varepsilon$} }
+                                    }
+                                    child { node {$\textcolor{blue}{\texttt{)}}$} }
+                                }
+                                child { node {$\textcolor{blue}{\texttt{)}}$} }
+                            }
+                            child [sibling distance=72mm] {
+                                node[lnode] {$\textcolor{blue}{\texttt{(())}} \in L$}
+                                child [sibling distance=48mm] {
+                                    node[lnode] {$\textcolor{blue}{\texttt{()}} \in L$}
+                                    child [sibling distance=16mm] { node {$\textcolor{blue}{\texttt{(}}$} }
+                                    child [sibling distance=16mm] {
+                                        node[lnode] {$\varepsilon \in L$}
+                                        child { node {$\varepsilon$} }
+                                    }
+                                    child [sibling distance=16mm] { node {$\textcolor{blue}{\texttt{)}}$} }
+                                }
+                                child [sibling distance=48mm] {
+                                    node[lnode] {$\textcolor{blue}{\texttt{()}} \in L$}
+                                    child [sibling distance=16mm] { node {$\textcolor{blue}{\texttt{(}}$} }
+                                    child [sibling distance=16mm] {
+                                        node[lnode] {$\varepsilon \in L$}
+                                        child { node {$\varepsilon$} }
+                                    }
+                                    child [sibling distance=16mm] { node {$\textcolor{blue}{\texttt{)}}$} }
+                                }
+                            };
+                    \end{tikzpicture}
+                }
+            \end{center}
+
+            \newpage
+
+            Es gibt eine äquivalente Charakterisierung:
+            Für jedes Wort $w \in \{(, )\}^*$ gilt:
+            $w$ ist ein korrekter Klammerausdruck is äquivalent zu $|w|_( = |w|_)$ und $|v|_( \geq |v|_)$ für jedes Präfix $v$ von $w$.
+
+            \emptyline
+
+            Der Beweis ist folgende:
+
+            \emptyline
+
+            \begin{adjustwidth}{2em}{0pt}
+
+                Wir beweisen erst die Hinrichtung über die Länge $|w|$ von $w$.
+
+                \emptyline
+
+                IA ($|w| = 0$): Dann gilt $w = \varepsilon$, also auch $v = w = \varepsilon$ und $|v|_( = |v|_) = 0$.
+
+                \emptyline
+
+                IS ($|w| \geq 1$): Dann gilt $w = w_1w_2$ oder $w = (w_1)$ mit $w_1w_2$ korrekte Klammerausdrücke.
+
+                \begin{enumerate}
+                    \item $w = w_1w_2$ mit $|w_1|, |w_2| < |w|$. \\
+                          Nach IV gilt $|w_1|_( = |w_1|_)$ und $|w_2|_( = |w_2|_)$ und daher $|w|_( = |w|_)$. \\
+                          Seien $v_1$, $v_2$ Präfixe von $w_1$ und $w_2$, und $v_1$, $v_2$ bilden zusammen $v$.
+                          Es kann sein, dass $v$ ganz in $w_1$ liegt, was heißt $v_1 = v$ und $v_2 = \varepsilon$.
+                          Oder $v$ liegt nicht nur in $w_1$, sogar auch in $w_2$ ($v_1 = w_1$).
+                          Nach IV gilt $|v_1|_( \geq |v_1|_)$ und $|v_2|_( \geq |v_2|_)$ und daher $|v|_( \geq |v|_)$.
+                    \item $w = (w_1)$ mit $|w_1| = |w| - 2 < |w|$. \\
+                          Nach IV gilt $|w_1|_( = |w_1|_)$ und daher $|w|_( = |w|_)$. \\
+                          Sei $v_1$ Präfix von $w_1$.
+                          Dann ist $v$ entweder \afz{$($}, \afz{$(v_1$} oder \afz{$(w_1)$}. \\
+                          Nach IV gilt $|v_1|_( \geq |v_1|_)$ und daher $|v|_( \geq |v|_)$.
+                \end{enumerate}
+
+                Dann beweisen wir die Rückrichtung über $|w|$.
+
+                \emptyline
+
+                IA ($|w| = 0$): Dann gilt $w = \varepsilon$ und $w$ ist ein korrekter Klammerausdruck.
+
+                \emptyline
+
+                IS ($|w| \geq 1$): Dann ist das erste Zeichen von $w$ ein $($.
+
+                \begin{enumerate}
+                    \item Es gibt ein echtes Präfix $u$ von $w$ mit $|u|_( = |u|_)$. \\
+                          Sei $w = uz$ mit $|z|_( = |z|_)$ und $|v|_( \geq |v|_)$ für jedes Präfix $v$ von $u$ oder $z$. \\
+                          Mit $|u|$, $|z| < |w|$ gilt nach IV, dass $u$, $z$ korrekte Klammerausdrücke sind.
+                          Dann ist auch $w = uz$ ein korrekter Klammerausdruck.
+                    \item Jedes echte Präfix $u$ von $w$ hat $|u|_( > |u|_)$. \\
+                          Zerlege $w$ als $w = (z)$.
+                          Dann gilt $|z|_( = |z|_)$ und $|v|_( \geq |v|_)$ für jedes Präfix $v$ von $z$. \\
+                          Mit $|z| < |w|$ gilt nach IV, dass $z$ ein korrekter Klammerausdruck ist.
+                          Dann ist auch $w = (z)$ ein korrekter Klammerausdruck.
+                \end{enumerate}
+
+            \end{adjustwidth}
+
+\end{document}
